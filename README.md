@@ -1,2 +1,3 @@
-# PROJETO-ROTA46-4.0
-Projeto Rota46, REST API usando Spring Boot
+# Back-End - PROJETO-ROTA46-4.0
+
+REST API desenvolvida em Java, utilizando o framework Spring. 
