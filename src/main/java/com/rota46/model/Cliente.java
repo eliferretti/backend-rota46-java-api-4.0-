@@ -1,10 +1,13 @@
 package com.rota46.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,33 +19,34 @@ public class Cliente {
 	private Long id;
 	
 	@Column(name = "Nome", nullable = false)
-	private String Nome;
+	private String nome;
 	
 	@Column(name = "Telefone", nullable = false) 
-	private String Telefone;
+	private String telefone;
 	
 	@Column(name = "CPF", nullable = false)
-	private String CPF;
+	private String cpf;
 	
 	@Column(name = "Sexo", nullable = false)
-	private String Sexo;
+	private String sexo;
 	
 	@Column(name = "Idade", nullable = false)
-	private Long Idade;
-	
+	private Long idade;
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Pacote> pacotes;
 
 	public Cliente() {
 		
 	}
 	
-	public Cliente(Long id, String nome, String telefone, String cPF, String sexo, Long idade) {
-		super();
-		this.id = id;
-		Nome = nome;
-		Telefone = telefone;
-		CPF = cPF;
-		Sexo = sexo;
-		Idade = idade;
+	public Cliente(String nome, String telefone, String cpf, String sexo, Long idade) {
+
+		this.nome = nome;
+		this.telefone = telefone;
+		this.cpf = cpf;
+		this.sexo = sexo;
+		this.idade = idade;
 	}
 
 	public Long getId() {
@@ -54,43 +58,43 @@ public class Cliente {
 	}
 
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 
 	public String getTelefone() {
-		return Telefone;
+		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
-		Telefone = telefone;
+		this.telefone = telefone;
 	}
 
-	public String getCPF() {
-		return CPF;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCPF(String cPF) {
-		CPF = cPF;
+	public void setCPF(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getSexo() {
-		return Sexo;
+		return sexo;
 	}
 
 	public void setSexo(String sexo) {
-		Sexo = sexo;
+		this.sexo = sexo;
 	}
 
 	public Long getIdade() {
-		return Idade;
+		return idade;
 	}
 
 	public void setIdade(Long idade) {
-		Idade = idade;
+		this.idade = idade;
 	}	
 	
 }

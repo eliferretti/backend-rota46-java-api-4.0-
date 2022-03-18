@@ -3,7 +3,6 @@ package com.rota46.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,10 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.rota46.repository.ClienteRepository;
 import com.rota46.repository.ResourceNotFoundException;
-import com.example.demo.Employee;
 import com.rota46.model.Cliente;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -45,9 +42,17 @@ public class ClienteController {
 	@GetMapping("/clientes/{id}")
 	public ResponseEntity<Cliente> consultaClienteId(@PathVariable Long id){
 		Cliente cliente = clienteRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cliente id não existe:" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Cliente id " + id +" não existe:"));
 		return ResponseEntity.ok(cliente);
 	}
+	
+	// consulta cliente pelo nome ou parte dele
+	@GetMapping("/clientesnome/{nome}")
+	public List<Cliente> getAllClientesNome(@PathVariable String nome){
+		return clienteRepository.findByNomeContainingIgnoreCase(nome);
+	}
+	
+	
 	
 	// editar cliente rest api
 	@PutMapping("/clientes/{id}")
@@ -56,7 +61,7 @@ public class ClienteController {
 	
 		cliente.setNome(clienteDetails.getNome());
 		cliente.setTelefone(clienteDetails.getTelefone());
-		cliente.setCPF(clienteDetails.getCPF());
+		cliente.setCPF(clienteDetails.getCpf());
 		cliente.setSexo(clienteDetails.getSexo());
 		cliente.setIdade(clienteDetails.getIdade());
 	
@@ -67,7 +72,7 @@ public class ClienteController {
 	// delete cliente rest api
 	@DeleteMapping("/clientes/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteCliente(@PathVariable Long id){
-		Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id \" + id + \" não foi encontrado."));
+		Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id " + id + " não foi encontrado."));
 		clienteRepository.delete(cliente);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
